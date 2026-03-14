@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "prisma generate && tsc -b && node dist/src/server.js",
-    "build": "prisma generate && tsc -b",
-    "start": "node dist/src/server.js"
+    "build": "prisma generate && prisma migrate deploy && tsc -b",
+    "start": "node dist/src/server.js",
+    "vercel-build": "prisma generate && prisma migrate deploy && tsc -b"
   },
   "keywords": [],
   "author": "",
