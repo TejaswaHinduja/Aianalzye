@@ -44,6 +44,7 @@ router.get("/journal", protect, async (req: AuthRequest, res) => {
   return res.json(entries)
 })
 
+// Optional: keep a userId-based route, but it's not used by the frontend anymore.
 router.get("/journal/:userId", protect, async (req: AuthRequest, res) => {
   const { userId } = req.params
 
@@ -102,23 +103,6 @@ router.post("/journal/:id/analyze", protect, async (req: AuthRequest, res) => {
   return res.json(updated)
 })
 
-router.get("/journal/insights/:userId", protect, async (req: AuthRequest, res) => {
-  const { userId } = req.params
-
-  if (!req.user || req.user.id !== userId) {
-    return res.status(401).json({ message: "Not authorized" })
-  }
-
-  const entries = await prisma.jounrnalEntry.findMany({
-    where: { userId },
-    orderBy: { createdAt: "desc" },
-  })
-
-  const insights = buildInsights(entries)
-
-  return res.json(insights)
-})
-
 router.get("/journal/insights", protect, async (req: AuthRequest, res) => {
   if (!req.user) {
     return res.status(401).json({ message: "Not authorized" })
@@ -160,6 +144,7 @@ function buildInsights(entries: JounrnalEntry[]) {
 
   const topEmotion = maxKey(emotionCount)
   const mostUsedAmbience = maxKey(ambienceCount)
+  console.log(topEmotion,totalEntries,mostUsedAmbience,recentKeywords)
 
   return {
     totalEntries,
