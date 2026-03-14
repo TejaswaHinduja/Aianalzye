@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import Link from "next/link"
+import { setToken } from "@/lib/auth"
 
 type SignupFormValues = {
   email: string
@@ -32,11 +33,10 @@ export default function SignupPage() {
         body: JSON.stringify(data),
       })
 
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}))
-        throw new Error(body.message ?? "Sign up failed")
-      }
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(body.message ?? "Sign up failed")
 
+      if (body.token) setToken(body.token)
       window.location.href = "/journal"
     } catch (err) {
       setServerError(err instanceof Error ? err.message : "Sign up failed")

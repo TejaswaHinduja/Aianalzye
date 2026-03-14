@@ -25,9 +25,10 @@ router.post("/signup", async (req, res) => {
     },
   })
 
-  generateJWT(user.id, res)
+  const token = generateJWT(user.id, res)
 
   return res.status(201).json({
+    token,
     id: user.id,
     email: user.email,
     createdAt: user.createdAt,
@@ -50,13 +51,13 @@ router.post("/login", async (req, res) => {
     return res.status(400).json({ message: "Invalid credentials" })
   }
 
-  generateJWT(user.id, res)
+  const token = generateJWT(user.id, res)
 
   return res.json({
+    token,
     id: user.id,
     email: user.email,
     createdAt: user.createdAt,
-    message:"logged in"
   })
 })
 

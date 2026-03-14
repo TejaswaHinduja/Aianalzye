@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { getAuthHeaders } from "@/lib/auth"
 
 type JournalFormValues = {
   ambience: string
@@ -57,7 +58,7 @@ export default function JournalPage() {
       const res = await fetch(`${API_BASE}/api/journal`, {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
+        headers: { ...getAuthHeaders(), "Content-Type": "application/json" },
         body: JSON.stringify({
           ambience: data.ambience,
           text: data.text,
@@ -83,6 +84,7 @@ export default function JournalPage() {
       const res = await fetch(`${API_BASE}/api/journal/${id}/analyze`, {
         method: "POST",
         credentials: "include",
+        headers: getAuthHeaders(),
       })
 
       if (!res.ok) {
@@ -338,13 +340,10 @@ async function loadEntriesAndInsights(
 ) {
   setError(null)
   try {
+    const headers = getAuthHeaders()
     const [entriesRes, insightsRes] = await Promise.all([
-      fetch(`${API_BASE}/api/journal`, {
-        credentials: "include",
-      }),
-      fetch(`${API_BASE}/api/journal/insights`, {
-        credentials: "include",
-      }),
+      fetch(`${API_BASE}/api/journal`, { credentials: "include", headers }),
+      fetch(`${API_BASE}/api/journal/insights`, { credentials: "include", headers }),
     ])
 
     if (entriesRes.ok) {

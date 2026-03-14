@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import Link from "next/link"
+import { setToken } from "@/lib/auth"
 
 type LoginFormValues = {
   email: string
@@ -10,7 +11,6 @@ type LoginFormValues = {
 }
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
-
 
 export default function LoginPage() {
   const {
@@ -33,11 +33,10 @@ export default function LoginPage() {
         body: JSON.stringify(data),
       })
 
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}))
-        throw new Error(body.message ?? "Login failed")
-      }
+      const body = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(body.message ?? "Login failed")
 
+      if (body.token) setToken(body.token)
       window.location.href = "/journal"
     } catch (err) {
       setServerError(err instanceof Error ? err.message : "Login failed")

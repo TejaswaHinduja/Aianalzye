@@ -15,10 +15,14 @@ export async function protect(
   res: Response,
   next: NextFunction
 ) {
-  const token = req.cookies?.jwt
+  const token =
+    req.cookies?.jwt ??
+    (req.headers.authorization?.startsWith("Bearer ")
+      ? req.headers.authorization.slice(7)
+      : null)
 
   if (!token) {
-    return res.status(400).json({ message: "Invalid credentials" })
+    return res.status(401).json({ message: "Invalid credentials" })
   }
 
   try {
