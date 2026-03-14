@@ -9,9 +9,24 @@ dotenv.config()
 
 const app = express()
 
-app.use(cors({ origin: ["http://localhost:4000","https://aianalzye-virid.vercel.app"], 
-  
-  credentials: true }))
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:4000",
+  "http://127.0.0.1:3000",
+  "https://aianalzye.vercel.app",
+  "https://aianalzye-virid.vercel.app",
+  process.env.FRONTEND_ORIGIN,
+].filter(Boolean) as string[]
+
+app.use(
+  cors({
+    origin(origin, cb) {
+      if (!origin || allowedOrigins.includes(origin)) return cb(null, true)
+      cb(null, false)
+    },
+    credentials: true,
+  })
+)
 app.use(express.json())
 app.use(cookieParser())
 
