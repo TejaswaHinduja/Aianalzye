@@ -24,6 +24,7 @@
 
 ---
 
+
 ### How to scale this to 100k users?
 
 - **1. Scale the API horizontally**
