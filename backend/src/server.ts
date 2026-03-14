@@ -9,7 +9,9 @@ dotenv.config()
 
 const app = express()
 
-app.use(cors({ origin: ["http://localhost:4000","https://aianalzye-virid.vercel.app"], credentials: true }))
+app.use(cors({ origin: ["http://localhost:4000","https://aianalzye-virid.vercel.app"], 
+  
+  credentials: true }))
 app.use(express.json())
 app.use(cookieParser())
 

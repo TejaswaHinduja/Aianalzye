@@ -44,7 +44,7 @@ router.get("/journal", protect, async (req: AuthRequest, res) => {
   return res.json(entries)
 })
 
-// Optional: keep a userId-based route, but it's not used by the frontend anymore.
+
 router.get("/journal/:userId", protect, async (req: AuthRequest, res) => {
   const { userId } = req.params
 
