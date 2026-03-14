@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { prisma } from "../../prisma/index.js"
-import type { JounrnalEntry } from "../../generated/prisma/client"
+import type { JounrnalEntry } from "../../generated/prisma/client.js"
 import { protect, type AuthRequest } from "../middleware/protect.js"
 import {analyzeText }from "../services/services.js"
 
