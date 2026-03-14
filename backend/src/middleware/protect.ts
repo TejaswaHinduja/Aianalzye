@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import type { JwtPayload } from "jsonwebtoken"
 import type { Request, Response, NextFunction } from "express"
-import type { User } from "../../generated/prisma/client"
+import type { User } from "../../generated/prisma/client.js"
 import { prisma } from "../../prisma/index.js"
 
 const secret = process.env.JWT_SECRET || "!23"
