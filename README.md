@@ -7,7 +7,7 @@ Ary Journal is a minimal full‑stack journaling app with:
 - **Frontend**: Next.js App Router, React, Tailwind‑style UI, `react-hook-form`.
 
 Core features:
-- Cookie‑based signup/login.
+- Cookie(JWT)‑based signup/login.
 - Create journal entries with ambience (forest, rain, etc.).
 - Per‑entry **“Analyze with AI”** to derive emotion, keywords, and summary.
 - **Insights card** that aggregates:
@@ -27,7 +27,7 @@ Core features:
   - Next.js 16 (App Router)
   - React 19
   - `react-hook-form` for forms
-  - Utility‑first styling (Tailwind‑style classes)
+  - TailwindCSS
 
 ### Local Development
 
@@ -106,16 +106,4 @@ npm run dev
   - Insights card + overlay.
   - Recent entries list + per‑entry “Analyze with AI”.
 
-### Running Tests / Lint
 
-The project currently relies on TypeScript and ESLint configuration from Next.js; there are no custom tests. You can run:
-
-```bash
-cd frontend && npm run lint
-```
-
-Prisma will validate the schema when you generate the client:
-
-```bash
-cd backend && npx prisma generate
-```
